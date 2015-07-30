@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/re.css">
+</head>
+
+<body>
+    <input id="vo1s" type="text">
+    <!--<script src="js/lib/require/require.js" defer async="true" data-main="js/main"></script>-->
+    <!--<script src="js/lib/require/require.js" defer async="true" data-main="js/output/main-built"></script>-->
+    <script src="js/lib/require/require.js"></script>
+    <script>
+    require.config({
+    	baseUrl: "./js",
+        paths: {
+            "main": "output/main-built",
+            "dev": "main"
+        }
+    });
+    require(["main"]);
+    </script>
+</body>
+
+</html>
