@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript">
+
+        var define, require, define2, require2; typeof JSON != "object" && (JSON = {}), function () { "use strict"; function i(n) { return n < 10 ? "0" + n : n } function o(n) { return u.lastIndex = 0, u.test(n) ? '"' + n.replace(u, function (n) { var t = s[n]; return typeof t == "string" ? t : "\\u" + ("0000" + n.charCodeAt(0).toString(16)).slice(-4) }) + '"' : '"' + n + '"' } function e(i, r) { var s, l, h, a, v = n, c, u = r[i]; u && typeof u == "object" && typeof u.toJSON == "function" && (u = u.toJSON(i)), typeof t == "function" && (u = t.call(r, i, u)); switch (typeof u) { case "string": return o(u); case "number": return isFinite(u) ? String(u) : "null"; case "boolean": case "null": return String(u); case "object": if (!u) return "null"; if (n += f, c = [], Object.prototype.toString.apply(u) === "[object Array]") { for (a = u.length, s = 0; s < a; s += 1) c[s] = e(s, u) || "null"; return h = c.length === 0 ? "[]" : n ? "[\n" + n + c.join(",\n" + n) + "\n" + v + "]" : "[" + c.join(",") + "]", n = v, h } if (t && typeof t == "object") for (a = t.length, s = 0; s < a; s += 1) typeof t[s] == "string" && (l = t[s], h = e(l, u), h && c.push(o(l) + (n ? ": " : ":") + h)); else for (l in u) Object.prototype.hasOwnProperty.call(u, l) && (h = e(l, u), h && c.push(o(l) + (n ? ": " : ":") + h)); return h = c.length === 0 ? "{}" : n ? "{\n" + n + c.join(",\n" + n) + "\n" + v + "}" : "{" + c.join(",") + "}", n = v, h } } typeof Date.prototype.toJSON != "function" && (Date.prototype.toJSON = function () { return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + i(this.getUTCMonth() + 1) + "-" + i(this.getUTCDate()) + "T" + i(this.getUTCHours()) + ":" + i(this.getUTCMinutes()) + ":" + i(this.getUTCSeconds()) + "Z" : null }, String.prototype.toJSON = Number.prototype.toJSON = Boolean.prototype.toJSON = function () { return this.valueOf() }); var r, u, n, f, s, t; typeof JSON.stringify != "function" && (u = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, s = { "\b": "\\b", "\t": "\\t", "\n": "\\n", "\f": "\\f", "\r": "\\r", '"': '\\"', "\\": "\\\\" }, JSON.stringify = function (i, r, u) { var o; if (n = "", f = "", typeof u == "number") for (o = 0; o < u; o += 1) f += " "; else typeof u == "string" && (f = u); if (t = r, r && typeof r != "function" && (typeof r != "object" || typeof r.length != "number")) throw new Error("JSON.stringify"); return e("", { "": i }) }), typeof JSON.parse != "function" && (r = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, JSON.parse = function (text, reviver) { function walk(n, t) { var r, u, i = n[t]; if (i && typeof i == "object") for (r in i) Object.prototype.hasOwnProperty.call(i, r) && (u = walk(i, r), u !== undefined ? i[r] = u : delete i[r]); return reviver.call(n, t, i) } var j; if (text = String(text), r.lastIndex = 0, r.test(text) && (text = text.replace(r, function (n) { return "\\u" + ("0000" + n.charCodeAt(0).toString(16)).slice(-4) })), /^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, "@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:\s*\[)+/g, ""))) return j = eval("(" + text + ")"), typeof reviver == "function" ? walk({ "": j }, "") : j; throw new SyntaxError("JSON.parse"); }) }(), function () { var n = {}; define = function (t, i, r) { if (arguments.length === 1) throw "the module must take a name"; if (arguments.length === 2) if (t.match(".")) { var u = t.split("."), f = [u[0]]; _findRefrence(f, i, !0, u[1], t) } else n[t] = i(); else n[t] = _excuCallback(i, r) }, require = function (n, t) { _findRefrence(n, t) }, _excuCallback = function (t, i) { for (var f = t.length, u = [], r = 0; r < f; r++) u.push(n[t[r]]); return i.apply(null, u) }, _findRefrence = function (t, i, r, u, f) { for (var e = 0, a = t.length, h = [], c = [], o; e < a; e++) for (o in n) { var l = o.split("."), v = l[0], y = l[1]; v === t[e] && (c.push(y), h.push(n[o])) } var s = i.toString(), p = s.slice(s.indexOf("{") + 1, s.lastIndexOf("}")) + (r ? "return " + u + ";" : ""), w = new Function(c, p), b = w.apply(null, h); r && (n[f] = b) } }(), function () { function r(n) { Object.prototype.toJSON = function () { var t = {}, n; for (n in this) this.hasOwnProperty(n) && (t[n] = typeof this[n] == "function" ? this[n].toString() : this[n]); return t }; var t = JSON.stringify(n); return delete Object.prototype.toJSON, t } var t, i, n; log = function (n) { window.console && console.log(n) }, t = !1, i = /xyz/.test(function () { xyz }) ? /\b_super\b/ : /.*/, this.Class = function () { }, Class.extend = function (n) { function u() { !t && this.init && this.init.apply(this, arguments) } var e = this.prototype, f, r; t = !0, f = new this, t = !1; for (r in n) f[r] = typeof n[r] == "function" && typeof e[r] == "function" && i.test(n[r]) ? function (n, t) { return function () { var r = this._super, i; return this._super = e[n], i = t.apply(this, arguments), this._super = r, i } }(r, n[r]) : n[r]; return u.prototype = f, u.prototype.constructor = u, u.extend = arguments.callee, u }, n = {}, window.modules = n, define2 = function (t, i, u) { if (arguments.length === 1) throw "the module must take a name"; if (arguments.length === 2) if (_indexOf(t, ".") !== -1) { var f = t.split("."), e = [f[0]], o = "function(){ var " + f[1] + "=Class.extend(" + r(i) + ");}"; _findRefrence(e, o, !0, f[1], t) } else n[t] = Class.extend(i); else n[t] = _excuCallback(i, u) }, require2 = function (n, t) { _findRefrence(n, t) }, _excuCallback = function (t, i) { for (var f = t.length, u = [], r = 0; r < f; r++) u.push(n[t[r]]); return i.apply(null, u) }, _indexOf = function (n, t) { if (n.indexOf) return n.indexOf(t); for (var i = 0, r = n.length; i < r; i++) if (t === n.charAt(i)) return i; return -1 }, _findRefrence = function (t, i, r, u, f) { for (var s = 0, p = t.length, c = [], l = [], h, e, o, v, y; s < p; s++) for (h in n) { var a = h.split("."), w = a[0], b = a[1]; w === t[s] && (l.push(b), c.push(n[h])) } e = i.toString().replace(/"function[\s\S]*?\}"/g, function (n) { return n.substr(1, n.length - 2) }), o = e.slice(e.indexOf("{") + 1, e.lastIndexOf("}")) + (r ? "return " + u + ";" : ""), o = o.replace(/\\r\\n/g, "").replace(/\\n/g, "").replace(/\\/g, ""), v = new Function(l, o), y = v.apply(null, c), r && (n[f] = y) } }();
+    
+    </script>
+</head>
+
+<body>
+    <div id="resultShowPanel"></div>
+    <script type="text/javascript" src="js/AppName.js">
+    // function JSONstringifyWithFuncs(obj) {
+    //     Object.prototype.toJSON = function() {
+    //         var sobj = {},
+    //             i;
+    //         for (i in this)
+    //             if (this.hasOwnProperty(i))
+    //                 sobj[i] = typeof this[i] == 'function' ?
+    //                 this[i].toString() : this[i];
+
+    //         return sobj;
+    //     }
+    // }
+    // define2("NS.Song", {
+    //     init: function(title) {
+    //         this.title = title;
+    //         var aa = "xxxxxxxxxxxx";
+    //     },
+    //     play: function() {
+    //         alert(this.title);
+    //     }
+    // })
+
+    // define2("NS.Album", {
+    //     init: function(title, songs) {
+    //         this.title = title || "当耐特专辑";
+    //         this.songs = songs || [new Song("当耐特进行曲"), new Song("当耐特荡起双桨")];
+
+    //     },
+    //     createSong: function(name) {
+    //         var song = new Song(name);
+    //         this.songs.push(song);
+    //     }
+    // })
+    // require2(["NS"], function() {
+    //     var span = document.createElement("span"),
+    //         text = "";
+    //     for (var i = 0, len = arguments.length; i < len; i++) {
+    //         text += "第" + i + "个参数:" + arguments[i].toString();
+    //         text += "<br/>"
+    //     }
+
+    //     var song = new Song("春天的故事");
+    //     text += "song title:" + song.title;
+    //     text += "<br/>";
+    //     var album = new Album();
+    //     text += "album first song:" + album.songs[0].title;
+    //     span.innerHTML = text;
+    //     var resultShowPanel2 = document.getElementById("resultShowPanel");
+    //     resultShowPanel2.innerHTML = "";
+    //     resultShowPanel2.appendChild(span);
+    // })
+    </script>
+</body>
+
+</html>
